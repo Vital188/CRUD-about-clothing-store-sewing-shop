@@ -4,7 +4,7 @@ import axios from 'axios';
 import { authConfig } from '../../Functions/auth';
 import Listas from '../Orderis/Listas'
 
-function Main() {
+function Main({userId}) {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [rubs, setRubs] = useState (null)
@@ -13,7 +13,7 @@ function Main() {
 
     // READ for list
     useEffect(() => {
-           axios.get('http://localhost:3003/rubs/wc', authConfig())
+           axios.get('http://localhost:3003/rubs/wc/'+userId, authConfig())
             .then(res => {
                 setRubs(((res.data)));
             })

@@ -26,12 +26,12 @@ function Main() {
     }
 
     // READ for list
-    useEffect(() => {
-        axios.get('http://localhost:3003/rubs/wc', authConfig())
-            .then(res => {
-                setRubis(reList(res.data));
-            })
-    }, [lastUpdate]);
+    // useEffect(() => {
+    //     axios.get('http://localhost:3003/rubs/wc', authConfig())
+    //         .then(res => {
+    //             setRubis(reList(res.data));
+    //         })
+    // }, [lastUpdate]);
 
     useEffect(() => {
         axios.get('http://localhost:3003/server/rubs/wc', authConfig())

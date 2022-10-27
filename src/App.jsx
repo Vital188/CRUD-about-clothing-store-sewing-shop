@@ -18,6 +18,7 @@ function App() {
 
   const [roleChange, setRoleChange] = useState(Date.now());
   const [msgs, setMsgs] = useState([]);
+  const [userId, setUserId] = useState(null)
 
 
   const makeMsg = useCallback((text, type = '') => {
@@ -52,12 +53,12 @@ function App() {
         <ShowNav roleChange={roleChange} />
         <Messages />
         <Routes>
-          <Route path="/" element={<RequireAuth role="user"><Home /></RequireAuth>}></Route>
+          <Route path="/" element={<RequireAuth setUserId={setUserId} role="user"><Home userId={userId}/></RequireAuth>}></Route>
           <Route path="/login" element={<LoginPage setRoleChange={setRoleChange} />} />
           <Route path="/logout" element={<LogoutPage setRoleChange={setRoleChange} />} />
           <Route path="/rubs" element={<RequireAuth role="admin"><MainRubs /></RequireAuth>}></Route>
-          <Route path="/orders" element={<RequireAuth role="admin"><MainOrders /></RequireAuth>}></Route>
-          <Route path="/Orderis" element={<RequireAuth role="user"><MainOrderis /></RequireAuth>}></Route>
+          <Route path="/orders" element={<RequireAuth setUserId={setUserId} role="admin"><MainOrders/></RequireAuth>}></Route>
+          <Route path="/Orderis" element={<RequireAuth setUserId={setUserId} role="user"><MainOrderis userId={userId}/></RequireAuth>}></Route>
           <Route path="/register" element={<RegisterPage setRoleChange={setRoleChange} />} />
         </Routes>
       </BrowserRouter>
@@ -77,15 +78,17 @@ function ShowNav({ roleChange }) {
   return <Nav status={status} />
 }
 
-function RequireAuth({ children, role }) {
+function RequireAuth({ children, role, setUserId }) {
   const [view, setView] = useState(<h2>Please wait...</h2>);
 
   useEffect(() => {
     axios.get('http://localhost:3003/login-check?role=' + role, authConfig())
       .then(res => {
-         
+     
         if ('ok' === res.data.msg) {
           setView(children);
+          console.log(res.data.user_id)
+          setUserId(res.data.user_id)
         }
         else if (res.data.status === 2) {
           setView(<h2>Unauthorize...</h2>)

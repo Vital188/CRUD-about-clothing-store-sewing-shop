@@ -6,7 +6,7 @@ import { authConfig } from '../../Functions/auth';
 import { useContext } from "react";
 import DataContext from "../../Contexts/DataContext";
 
-function Main() {
+function Main({userId}) {
 
         const [lastUpdate, setLastUpdate] = useState(Date.now());
         const [rubs, setRubs] = useState(null);
@@ -51,6 +51,7 @@ function Main() {
             setOrder,
             rubs,
             setRubs, 
+            userId
             
         }}>
         <div className="container">

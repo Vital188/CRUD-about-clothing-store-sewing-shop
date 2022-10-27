@@ -5,7 +5,7 @@ import { useState } from "react";
 
 function Line({ rubs, rubFiltered }) {
 console.log(rubs)
-    const { setOrder } = useContext(Home);
+    const { setOrder, userId } = useContext(Home);
 
     const [orderis, setOrderis] = useState('');
     const [post, setPost] = useState('');
@@ -16,7 +16,8 @@ console.log(rubs)
         setOrder({
             comment: post,
             orderis,
-            rubs_id: rubs.id
+            rubs_id: rubs.id,
+            user_id: userId
         });
         setOrderis('');
         setPost('');
